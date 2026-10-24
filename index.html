@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>【内部首发】三角洲行动-全图透视自瞄防封直装版</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* 假装是外挂的页面 */
+        .hack-container {
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            background: #222;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .hack-container h2 { color: #4CAF50; margin-bottom: 10px; }
+        .hack-container p { color: #888; font-size: 14px; }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #000;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.1s;
+        }
+        .log-text {
+            text-align: left;
+            font-family: monospace;
+            font-size: 12px;
+            color: #0f0;
+            height: 100px;
+            overflow-y: hidden;
+            margin-top: 10px;
+        }
+
+        /* 普法警告页面（一开始隐藏） */
+        .police-box {
+            display: none;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            background: #2b0000;
+            padding: 30px;
+            border-radius: 10px;
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 50px rgba(255,0,0,0.6);
+            z-index: 100;
+            position: absolute;
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            50% { transform: translate(-1px, 2px) rotate(1deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+        }
+        .police-box h1 { color: #ff0000; font-size: 26px; margin-bottom: 20px;}
+        .law-text { text-align: left; color: #ffcccc; font-size: 15px; line-height: 1.8; }
+        .device-info { color: #ffff00; font-size: 13px; margin-top: 20px; text-align: left; background: #000; padding: 10px; border-radius: 5px;}
+    </style>
+</head>
+<body>
+
+    <!-- 假外挂界面 -->
+    <div class="hack-container" id="hackUI">
+        <h2>三角洲行动 - 内部防封直装版 V3.2</h2>
+        <p>正在绕过ACE反作弊系统...请勿断开连接</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        <div class="log-text" id="log">
+            > 初始化内存注入模块...<br>
+            > 寻找游戏进程 DeltaForce.exe...
+        </div>
+    </div>
+
+    <!-- 普法恐吓界面 -->
+    <div class="police-box" id="policeUI">
+        <h1>⚠️ 网络安全警告 ⚠️</h1>
+        <div class="law-text">
+            <p><strong>你的异常访问行为已被反作弊安全中心拦截并记录！</strong></p>
+            <p>根据《中华人民共和国刑法》第二百八十五条、第二百八十六条，以及《计算机软件保护条例》相关规定：制作、传播、使用游戏外挂，破坏计算机信息系统，属于违法犯罪行为。</p>
+            <p>情节严重的，处五年以下有期徒刑或者拘役；情节特别严重的，处五年以上有期徒刑。</p>
+        </div>
+        <div class="device-info" id="deviceInfo">
+            <!-- JS 会在这里注入假的设备信息 -->
+        </div>
+        <p style="margin-top: 20px; color: #fff; font-size: 12px;">* 本页面为极客普法恶作剧，请关闭页面并卸载所有外挂。</p>
+    </div>
+
+    <script>
+        // 1. 假装在外挂加载
+        let progress = 0;
+        let progressBar = document.getElementById('progress');
+        let log = document.getElementById('log');
+
+        let interval = setInterval(function() {
+            progress += Math.random() * 5;
+            if (progress > 100) progress = 100;
+            progressBar.style.width = progress + '%';
+
+            if (progress > 30 && progress < 35) log.innerHTML += "> 正在修改武器后坐力参数...<br>";
+            if (progress > 60 && progress < 65) log.innerHTML += "> 正在加载全图透视雷达...<br>";
+            if (progress > 85 && progress < 90) log.innerHTML += "> <span style='color:red'>警告：检测到反作弊主动扫描！正在强制隐藏...</span><br>";
+
+            // 进度满了，直接收网！
+            if (progress >= 100) {
+                clearInterval(interval);
+                document.getElementById('hackUI').style.display = 'none';
+                document.getElementById('policeUI').style.display = 'block';
+                document.title = "🚨 警告：您的IP已被锁定";
+
+                // 2. 假装获取了他的设备信息
+                // 注意：这里获取到的其实就是他自己手机/电脑的公开参数，用来吓唬他的
+                let ua = navigator.userAgent;
+                let screenW = window.screen.width;
+                let screenH = window.screen.height;
+                
+                // 根据不同设备瞎编一个IP格式
+                let fakeIP = "192.168." + Math.floor(Math.random()*255) + "." + Math.floor(Math.random()*255);
+                if (ua.indexOf("Windows") !== -1) {
+                    fakeIP = "114.24." + Math.floor(Math.random()*255) + "." + Math.floor(Math.random()*255) + " (电信)";
+                }
+
+                document.getElementById('deviceInfo').innerHTML = `
+                    > 终端设备识别码：${ua.substring(0, 30)}...<br>
+                    > 屏幕分辨率：${screenW} x ${screenH}<br>
+                    > 当前网络IP：${fakeIP}<br>
+                    > 状态：数据已打包并上传至安全中心。
+                `;
+            }
+        }, 100); // 每100毫秒加一点进度
+    </script>
+
+</body>
+      </html>
